@@ -59,7 +59,7 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.fetch(false);
+    // this.authService.fetch(false);
     // this.extractInformationForSearch();
   }
 
