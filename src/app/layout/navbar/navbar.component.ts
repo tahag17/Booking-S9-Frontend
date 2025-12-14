@@ -13,6 +13,7 @@ import { MenuItem } from 'primeng/api';
 import { SearchComponent } from '../../tenant/search/search.component';
 import { PropertiesCreateComponent } from '../../landlord/properties-create/properties-create.component';
 import { User } from '../../core/model/user.model';
+import dayjs from 'dayjs';
 // import dayjs from "dayjs";
 
 @Component({
@@ -59,8 +60,8 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.authService.fetch(false);
-    // this.extractInformationForSearch();
+    this.authService.fetch(false);
+    this.extractInformationForSearch();
   }
 
   private fetchMenu(): MenuItem[] {
@@ -107,7 +108,7 @@ export class NavbarComponent implements OnInit {
   openNewListing(): void {
     this.ref = this.dialogService.open(PropertiesCreateComponent, {
       width: '60%',
-      header: 'Airbnb your home',
+      header: 'Book your home',
       closable: true,
       focusOnShow: true,
       modal: true,
@@ -126,25 +127,22 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  // private extractInformationForSearch(): void {
-  //   // this.activatedRoute.queryParams.subscribe({
-  //   //   next: (params) => {
-  //   //     if (params['location']) {
-  //   //       this.location = params['location'];
-  //   //       this.guests = params['guests'] + ' Guests';
-  //   //       this.dates =
-  //   //         dayjs(params['startDate']).format('MMM-DD') +
-  //   //         ' to ' +
-  //   //         dayjs(params['endDate']).format('MMM-DD');
-  //   //     } else if (this.location !== 'Anywhere') {
-  //   //       this.location = 'Anywhere';
-  //   //       this.guests = 'Add guests';
-  //   //       this.dates = 'Any week';
-  //   //     }
-  //   //   },
-  //   // });
-  // }
-}
-function dayjs(arg0: any) {
-  throw new Error('Function not implemented.');
+  private extractInformationForSearch(): void {
+    this.activatedRoute.queryParams.subscribe({
+      next: (params) => {
+        if (params['location']) {
+          this.location = params['location'];
+          this.guests = params['guests'] + ' Guests';
+          this.dates =
+            dayjs(params['startDate']).format('MMM-DD') +
+            ' to ' +
+            dayjs(params['endDate']).format('MMM-DD');
+        } else if (this.location !== 'Anywhere') {
+          this.location = 'Anywhere';
+          this.guests = 'Add guests';
+          this.dates = 'Any week';
+        }
+      },
+    });
+  }
 }
