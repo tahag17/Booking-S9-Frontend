@@ -1,8 +1,7 @@
 export default [
   {
     context: ["/api", "/oauth2", "/login", "/assets"],
-    target: "https://backend.com",
+    target: "http://localhost:8080",
     secure: true,
-    changeOrigin: true,
   },
 ];
