@@ -1,7 +1,9 @@
 /* =========================================================
    1️⃣ Tailwind (must be first)
    ========================================================= */
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* =========================================================
    2️⃣ Custom fonts & variables
