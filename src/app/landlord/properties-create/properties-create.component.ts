@@ -1,22 +1,27 @@
-import {Component, effect, inject, OnDestroy} from '@angular/core';
-import {DynamicDialogRef} from "primeng/dynamicdialog";
-import {LandlordListingService} from "../landlord-listing.service";
-import {ToastService} from "../../layout/toast.service";
-import {AuthService} from "../../core/auth/auth.service";
-import {Router} from "@angular/router";
-import {Step} from "./step.model";
-import {CreatedListing, Description, NewListing, NewListingInfo} from "../model/listing.model";
-import {NewListingPicture} from "../model/picture.model";
-import {State} from "../../core/model/state.model";
-import {CategoryName} from "../../layout/navbar/category/category.model";
-import {FooterStepComponent} from "../../shared/footer-step/footer-step.component";
-import {CategoryStepComponent} from "./step/category-step/category-step.component";
-import {LocationStepComponent} from "./step/location-step/location-step.component";
-import {InfoStepComponent} from "./step/infoStep/info-step-control/info-step/info-step.component";
-import {PictureStepComponent} from "./step/picture-step/picture-step.component";
-import {DescriptionStepComponent} from "./step/description-step/description-step.component";
-import {PriceStepComponent} from "./step/price-step/price-step.component";
-import {PriceVO} from "../model/listing-vo.model";
+import { Component, effect, inject, OnDestroy } from '@angular/core';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ToastService } from '../../layout/toast.service';
+import { AuthService } from '../../core/auth/auth.service';
+import { Router } from '@angular/router';
+import { Step } from './step.model';
+import {
+  CreatedListing,
+  Description,
+  NewListing,
+  NewListingInfo,
+} from '../model/listing.model';
+import { NewListingPicture } from '../model/picture.model';
+import { State } from '../../core/model/state.model';
+import { CategoryName } from '../../layout/navbar/category/category.model';
+import { FooterStepComponent } from '../../shared/footer-step/footer-step.component';
+import { CategoryStepComponent } from './step/category-step/category-step.component';
+import { LocationStepComponent } from './step/location-step/location-step.component';
+import { PictureStepComponent } from './step/picture-step/picture-step.component';
+import { DescriptionStepComponent } from './step/description-step/description-step.component';
+import { PriceStepComponent } from './step/price-step/price-step.component';
+import { PriceVO } from '../model/listing-vo.model';
+import { LandlordListingService } from '../landlordlisting.service';
+import { InfoStepComponent } from './step/infoStep/info-step.component';
 
 @Component({
   selector: 'app-properties-create',
@@ -28,19 +33,18 @@ import {PriceVO} from "../model/listing-vo.model";
     InfoStepComponent,
     PictureStepComponent,
     DescriptionStepComponent,
-    PriceStepComponent
+    PriceStepComponent,
   ],
   templateUrl: './properties-create.component.html',
-  styleUrl: './properties-create.component.scss'
+  styleUrl: './properties-create.component.scss',
 })
 export class PropertiesCreateComponent implements OnDestroy {
-
-  CATEGORY = "category";
-  LOCATION = "location";
-  INFO = "info";
-  PHOTOS = "photos";
-  DESCRIPTION = "description";
-  PRICE = "price";
+  CATEGORY = 'category';
+  LOCATION = 'location';
+  INFO = 'info';
+  PHOTOS = 'photos';
+  DESCRIPTION = 'description';
+  PRICE = 'price';
 
   dialogDynamicRef = inject(DynamicDialogRef);
   listingService = inject(LandlordListingService);
@@ -53,61 +57,60 @@ export class PropertiesCreateComponent implements OnDestroy {
       id: this.CATEGORY,
       idNext: this.LOCATION,
       idPrevious: null,
-      isValid: false
+      isValid: false,
     },
     {
       id: this.LOCATION,
       idNext: this.INFO,
       idPrevious: this.CATEGORY,
-      isValid: false
+      isValid: false,
     },
     {
       id: this.INFO,
       idNext: this.PHOTOS,
       idPrevious: this.LOCATION,
-      isValid: false
+      isValid: false,
     },
     {
       id: this.PHOTOS,
       idNext: this.DESCRIPTION,
       idPrevious: this.INFO,
-      isValid: false
+      isValid: false,
     },
     {
       id: this.DESCRIPTION,
       idNext: this.PRICE,
       idPrevious: this.PHOTOS,
-      isValid: false
+      isValid: false,
     },
     {
       id: this.PRICE,
       idNext: null,
       idPrevious: this.DESCRIPTION,
-      isValid: false
-    }
+      isValid: false,
+    },
   ];
 
   currentStep = this.steps[0];
 
   newListing: NewListing = {
-    category: "AMAZING_VIEWS",
+    category: 'AMAZING_VIEWS',
     infos: {
-      guests: {value: 0},
-      bedrooms: {value: 0},
-      beds: {value: 0},
-      baths: {value: 0}
+      guests: { value: 0 },
+      bedrooms: { value: 0 },
+      beds: { value: 0 },
+      baths: { value: 0 },
     },
-    location: "",
+    location: '',
     pictures: new Array<NewListingPicture>(),
     description: {
-      title: {value: ""},
-      description: {value: ""}
+      title: { value: '' },
+      description: { value: '' },
     },
-    price: {value: 0}
+    price: { value: 0 },
   };
 
   loadingCreation = false;
-
 
   constructor() {
     this.listenFetchUser();
@@ -125,9 +128,11 @@ export class PropertiesCreateComponent implements OnDestroy {
 
   listenFetchUser() {
     effect(() => {
-      if (this.userService.fetchUser().status === "OK"
-        && this.listingService.createSig().status === "OK") {
-        this.router.navigate(["landlord", "properties"]);
+      if (
+        this.userService.fetchUser().status === 'OK' &&
+        this.listingService.createSig().status === 'OK'
+      ) {
+        this.router.navigate(['landlord', 'properties']);
       }
     });
   }
@@ -135,9 +140,9 @@ export class PropertiesCreateComponent implements OnDestroy {
   listenListingCreation() {
     effect(() => {
       let createdListingState = this.listingService.createSig();
-      if (createdListingState.status === "OK") {
+      if (createdListingState.status === 'OK') {
         this.onCreateOk(createdListingState);
-      } else if (createdListingState.status === "ERROR") {
+      } else if (createdListingState.status === 'ERROR') {
         this.onCreateError();
       }
     });
@@ -146,7 +151,9 @@ export class PropertiesCreateComponent implements OnDestroy {
   onCreateOk(createdListingState: State<CreatedListing>) {
     this.loadingCreation = false;
     this.toastService.send({
-      severity: "success", summary: "Success", detail: "Listing created successfully.",
+      severity: 'success',
+      summary: 'Success',
+      detail: 'Listing created successfully.',
     });
     this.dialogDynamicRef.close(createdListingState.value?.publicId);
     this.userService.fetch(true);
@@ -155,24 +162,32 @@ export class PropertiesCreateComponent implements OnDestroy {
   private onCreateError() {
     this.loadingCreation = false;
     this.toastService.send({
-      severity: "error", summary: "Error", detail: "Couldn't create your listing, please try again.",
+      severity: 'error',
+      summary: 'Error',
+      detail: "Couldn't create your listing, please try again.",
     });
   }
 
   nextStep(): void {
     if (this.currentStep.idNext !== null) {
-      this.currentStep = this.steps.filter((step: Step) => step.id === this.currentStep.idNext)[0];
+      this.currentStep = this.steps.filter(
+        (step: Step) => step.id === this.currentStep.idNext
+      )[0];
     }
   }
 
   previousStep(): void {
     if (this.currentStep.idPrevious !== null) {
-      this.currentStep = this.steps.filter((step: Step) => step.id === this.currentStep.idPrevious)[0];
+      this.currentStep = this.steps.filter(
+        (step: Step) => step.id === this.currentStep.idPrevious
+      )[0];
     }
   }
 
   isAllStepsValid(): boolean {
-    return this.steps.filter(step => step.isValid).length === this.steps.length;
+    return (
+      this.steps.filter((step) => step.isValid).length === this.steps.length
+    );
   }
 
   onCategoryChange(newCategory: CategoryName): void {
