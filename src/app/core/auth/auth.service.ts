@@ -89,15 +89,28 @@ export class AuthService {
   }
 
   logout(): void {
-    this.http.post(`${environment.API_URL}/auth/logout`, {}).subscribe({
-      next: (response: any) => {
-        this.fetchUser$.set(
-          State.Builder<User>().forSuccess({ email: this.notConnected })
-        );
-        location.href = response.logoutUrl;
-      },
-    });
+    this.http
+      .post(`${environment.API_URL}/auth/logout`, {}, { withCredentials: true })
+      .subscribe({
+        next: (response: any) => {
+          this.fetchUser$.set(
+            State.Builder<User>().forSuccess({ email: this.notConnected })
+          );
+          window.location.href = response.logoutUrl;
+        },
+      });
   }
+
+  // logout(): void {
+  //   this.http.post(`${environment.API_URL}/auth/logout`, {}).subscribe({
+  //     next: (response: any) => {
+  //       this.fetchUser$.set(
+  //         State.Builder<User>().forSuccess({ email: this.notConnected })
+  //       );
+  //       location.href = response.logoutUrl;
+  //     },
+  //   });
+  // }
 
   isAuthenticated(): boolean {
     if (this.fetchUser$().value) {
