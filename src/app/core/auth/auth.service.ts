@@ -29,6 +29,32 @@ export class AuthService {
   );
   fetchUser = computed(() => this.fetchUser$());
 
+  // fetch(forceResync: boolean): void {
+  //   this.fetchHttpUser(forceResync).subscribe({
+  //     next: (user) => {
+  //       this.fetchUser$.set(State.Builder<User>().forSuccess(user));
+  //       this.toastService.send({
+  //         severity: 'success',
+  //         summary: 'Login successful',
+  //         detail: `Welcome back ${user.email}`,
+  //         life: 3000,
+  //       });
+  //     },
+  //     error: (err) => {
+  //       if (
+  //         err.status === HttpStatusCode.Unauthorized &&
+  //         this.isAuthenticated()
+  //       ) {
+  //         this.fetchUser$.set(
+  //           State.Builder<User>().forSuccess({ email: this.notConnected })
+  //         );
+  //       } else {
+  //         this.fetchUser$.set(State.Builder<User>().forError(err));
+  //       }
+  //     },
+  //   });
+  // }
+
   fetch(forceResync: boolean): void {
     this.fetchHttpUser(forceResync).subscribe({
       next: (user) => {
@@ -41,10 +67,7 @@ export class AuthService {
         });
       },
       error: (err) => {
-        if (
-          err.status === HttpStatusCode.Unauthorized &&
-          this.isAuthenticated()
-        ) {
+        if (err.status === HttpStatusCode.Unauthorized) {
           this.fetchUser$.set(
             State.Builder<User>().forSuccess({ email: this.notConnected })
           );
