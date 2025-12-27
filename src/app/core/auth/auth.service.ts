@@ -113,7 +113,7 @@ export class AuthService {
       .set('ts', Date.now()); //prevent caching
     return this.http.get<User>(
       `${environment.API_URL}/auth/get-authenticated-user`,
-      { params }
+      { params, withCredentials: true }
     );
   }
 
