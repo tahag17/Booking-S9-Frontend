@@ -1,5 +1,5 @@
 export const environment = {
-  API_URL: 'https://booking-s9-frontend.vercel.app/api',
-  BACKEND_URL: 'https://backend.com',
+  API_URL: 'https://booking-backend-295607ecab74.herokuapp.com/api',
+  BACKEND_URL: 'https://booking-backend-295607ecab74.herokuapp.com',
   production: true,
 };
