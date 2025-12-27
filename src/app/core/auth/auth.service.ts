@@ -29,32 +29,6 @@ export class AuthService {
   );
   fetchUser = computed(() => this.fetchUser$());
 
-  // fetch(forceResync: boolean): void {
-  //   this.fetchHttpUser(forceResync).subscribe({
-  //     next: (user) => {
-  //       this.fetchUser$.set(State.Builder<User>().forSuccess(user));
-  //       this.toastService.send({
-  //         severity: 'success',
-  //         summary: 'Login successful',
-  //         detail: `Welcome back ${user.email}`,
-  //         life: 3000,
-  //       });
-  //     },
-  //     error: (err) => {
-  //       if (
-  //         err.status === HttpStatusCode.Unauthorized &&
-  //         this.isAuthenticated()
-  //       ) {
-  //         this.fetchUser$.set(
-  //           State.Builder<User>().forSuccess({ email: this.notConnected })
-  //         );
-  //       } else {
-  //         this.fetchUser$.set(State.Builder<User>().forError(err));
-  //       }
-  //     },
-  //   });
-  // }
-
   fetch(forceResync: boolean): void {
     this.fetchHttpUser(forceResync).subscribe({
       next: (user) => {
@@ -67,7 +41,10 @@ export class AuthService {
         });
       },
       error: (err) => {
-        if (err.status === HttpStatusCode.Unauthorized) {
+        if (
+          err.status === HttpStatusCode.Unauthorized &&
+          this.isAuthenticated()
+        ) {
           this.fetchUser$.set(
             State.Builder<User>().forSuccess({ email: this.notConnected })
           );
@@ -78,39 +55,62 @@ export class AuthService {
     });
   }
 
-  // login(): void {
-  //   location.href = `${location.origin}${this.location.prepareExternalUrl(
-  //     'oauth2/authorization/okta'
-  //   )}`;
-  // }
-
-  login(): void {
-    window.location.href = `${environment.BACKEND_URL}/oauth2/authorization/okta`;
-  }
-
-  logout(): void {
-    this.http
-      .post(`${environment.API_URL}/auth/logout`, {}, { withCredentials: true })
-      .subscribe({
-        next: (response: any) => {
-          this.fetchUser$.set(
-            State.Builder<User>().forSuccess({ email: this.notConnected })
-          );
-          window.location.href = response.logoutUrl;
-        },
-      });
-  }
-
-  // logout(): void {
-  //   this.http.post(`${environment.API_URL}/auth/logout`, {}).subscribe({
-  //     next: (response: any) => {
-  //       this.fetchUser$.set(
-  //         State.Builder<User>().forSuccess({ email: this.notConnected })
-  //       );
-  //       location.href = response.logoutUrl;
+  // fetch(forceResync: boolean): void {
+  //   this.fetchHttpUser(forceResync).subscribe({
+  //     next: (user) => {
+  //       this.fetchUser$.set(State.Builder<User>().forSuccess(user));
+  //       this.toastService.send({
+  //         severity: 'success',
+  //         summary: 'Login successful',
+  //         detail: `Welcome back ${user.email}`,
+  //         life: 3000,
+  //       });
+  //     },
+  //     error: (err) => {
+  //       if (err.status === HttpStatusCode.Unauthorized) {
+  //         this.fetchUser$.set(
+  //           State.Builder<User>().forSuccess({ email: this.notConnected })
+  //         );
+  //       } else {
+  //         this.fetchUser$.set(State.Builder<User>().forError(err));
+  //       }
   //     },
   //   });
   // }
+
+  login(): void {
+    location.href = `${location.origin}${this.location.prepareExternalUrl(
+      'oauth2/authorization/okta'
+    )}`;
+  }
+
+  // login(): void {
+  //   window.location.href = `${environment.BACKEND_URL}/oauth2/authorization/okta`;
+  // }
+
+  // logout(): void {
+  //   this.http
+  //     .post(`${environment.API_URL}/auth/logout`, {}, { withCredentials: true })
+  //     .subscribe({
+  //       next: (response: any) => {
+  //         this.fetchUser$.set(
+  //           State.Builder<User>().forSuccess({ email: this.notConnected })
+  //         );
+  //         window.location.href = response.logoutUrl;
+  //       },
+  //     });
+  // }
+
+  logout(): void {
+    this.http.post(`${environment.API_URL}/auth/logout`, {}).subscribe({
+      next: (response: any) => {
+        this.fetchUser$.set(
+          State.Builder<User>().forSuccess({ email: this.notConnected })
+        );
+        location.href = response.logoutUrl;
+      },
+    });
+  }
 
   isAuthenticated(): boolean {
     if (this.fetchUser$().value) {

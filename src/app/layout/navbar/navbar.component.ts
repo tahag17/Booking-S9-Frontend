@@ -59,19 +59,19 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('code')) {
-      // User just came back from login
-      this.authService.fetch(true); // Force fetch authenticated user
-    }
-    this.extractInformationForSearch();
-  }
-
   // ngOnInit(): void {
-  //   this.authService.fetch(false);
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   if (urlParams.has('code')) {
+  //     // User just came back from login
+  //     this.authService.fetch(true); // Force fetch authenticated user
+  //   }
   //   this.extractInformationForSearch();
   // }
+
+  ngOnInit(): void {
+    this.authService.fetch(false);
+    this.extractInformationForSearch();
+  }
 
   private fetchMenu(): MenuItem[] {
     if (this.authService.isAuthenticated()) {
