@@ -18,6 +18,7 @@ describe('PropertiesCreateComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    // expect(component).toBeTruthy();
+    (expect(component) as unknown as jasmine.Matchers<any>).toBeTruthy();
   });
 });
