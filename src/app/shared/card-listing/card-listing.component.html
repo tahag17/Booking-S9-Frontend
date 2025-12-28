@@ -1,4 +1,4 @@
-<div class="card relative cursor-pointer">
+<div class="card relative cursor-pointer p-2 bg-slate-100 rounded-3xl hover:shadow-xl">
   <div (click)="onClickCard(cardMode() === 'booking' ? bookingListing?.listingPublicId! : cardListing?.publicId!)">
     <div class="border-1 border-transparent border-round-3xl bg-cover bg-center bg-no-repeat h-24rem w-full"
          [style.background-image]="'url(' + 'data:' + listing().cover.fileContentType + ';base64,' + listing().cover.file + ')'">

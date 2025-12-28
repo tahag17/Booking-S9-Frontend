@@ -77,6 +77,10 @@ export class NavbarComponent implements OnInit {
     if (this.authService.isAuthenticated()) {
       return [
         {
+          label: 'Book your home',
+          command: () => this.openNewListing(),
+        },
+        {
           label: 'My properties',
           routerLink: 'landlord/properties',
           visible: this.hasToBeLandlord(),
@@ -127,7 +131,8 @@ export class NavbarComponent implements OnInit {
 
   openNewSearch(): void {
     this.ref = this.dialogService.open(SearchComponent, {
-      width: '40%',
+      width: '60%',
+      breakpoints: { '960px': '90%' },
       header: 'Search',
       closable: true,
       focusOnShow: true,

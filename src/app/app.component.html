@@ -1,7 +1,7 @@
-<p-toast></p-toast>
+<p-toast position="bottom-right"></p-toast>
 <app-navbar></app-navbar>
-<div class="grid grid-nogutter mb-5" [class.mx-8]="isListingView">
-  <div class="col mt-5">
+<div class="flex-1 grid grid-nogutter m-2"> <!-- [class.mx-8]="isListingView" -->
+  <div class="col mt-2">
     <router-outlet></router-outlet>
   </div>
 </div>

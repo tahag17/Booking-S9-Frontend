@@ -13,3 +13,28 @@
 .placeholder {
   height: 70px;
 }
+
+#next {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0px 15px;
+
+  &:hover:not(:disabled) {
+    background-color: var(--primary-color);
+    opacity: 0.9;
+  }
+
+  &:disabled,
+  &.p-disabled {
+    background-color: #9CA3AF;
+    color: #E5E7EB;
+    cursor: not-allowed;
+  }
+}
+
+#back {
+  padding: 0px 15px;
+  border-radius: $dialogBorderRadius;
+  border: solid;
+}
