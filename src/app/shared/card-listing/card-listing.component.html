@@ -21,7 +21,7 @@
   </div>
   @if (cardMode() === "landlord") {
     <button [disabled]="cardListing?.loading" class="absolute trash-btn p-button"
-            (click)="onDeleteListing(cardListing!)">
+            (click)="$event.stopPropagation(); onDeleteListing(cardListing!)">
       @if (cardListing?.loading) {
         <fa-icon icon="circle-notch" animation="spin"></fa-icon>
       } @else {
@@ -32,7 +32,7 @@
 
   @if (cardMode() === "booking") {
     <button [disabled]="bookingListing?.loading" class="absolute trash-btn p-button"
-            (click)="onCancelBooking(bookingListing!)">
+            (click)="$event.stopPropagation(); onCancelBooking(bookingListing!)">
       @if (bookingListing?.loading) {
         <fa-icon icon="circle-notch" animation="spin"></fa-icon>
       } @else {
