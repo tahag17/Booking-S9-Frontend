@@ -1,0 +1,25 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://booking-backend-295607ecab74.herokuapp.com/api/$1"
+    },
+    {
+      "source": "/oauth2/(.*)",
+      "destination": "https://booking-backend-295607ecab74.herokuapp.com/oauth2/$1"
+    },
+    {
+      "source": "/login/(.*)",
+      "destination": "https://booking-backend-295607ecab74.herokuapp.com/login/$1"
+    },
+    {
+      "source": "/assets/(.*)",
+      "destination": "https://booking-backend-295607ecab74.herokuapp.com/assets/$1"
+    },
+
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

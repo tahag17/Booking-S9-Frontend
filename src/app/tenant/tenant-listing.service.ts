@@ -92,7 +92,8 @@ import { environment } from '../../environments/environment';
 export class TenantListingService {
   private http = inject(HttpClient);
 
-  private readonly BASE_URL = `${environment.BACKEND_URL}/api`;
+  // private readonly BASE_URL = `${environment.BACKEND_URL}/api`;
+  private readonly BASE_URL = environment.API_URL;
 
   private getAllByCategory$: WritableSignal<State<Page<CardListing>>> = signal(
     State.Builder<Page<CardListing>>().forInit()
