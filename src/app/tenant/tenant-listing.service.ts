@@ -41,6 +41,9 @@ export class TenantListingService {
 
   constructor() {}
 
+  // const listing = fetch("https://booking-s9-frontend.vercel.app/api/tenant-listing/get-all-by-category?page=0&size=20&category=ALL");
+  // const serch = fetch("https://booking-s9-frontend.vercel.app/api/tenant-listing/search?page=0&size=20")
+
   getAllByCategory(pageRequest: Pagination, category: CategoryName): void {
     let params = createPaginationOption(pageRequest);
     params = params.set('category', category);
