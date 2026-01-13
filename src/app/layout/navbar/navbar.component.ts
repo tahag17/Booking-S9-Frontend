@@ -83,7 +83,7 @@ export class NavbarComponent implements OnInit {
         {
           label: 'My properties',
           routerLink: 'landlord/properties',
-          visible: this.hasToBeLandlord(),
+          // visible: this.hasToBeLandlord(),
         },
         {
           label: 'My booking',
@@ -92,7 +92,7 @@ export class NavbarComponent implements OnInit {
         {
           label: 'My reservation',
           routerLink: 'landlord/reservation',
-          visible: this.hasToBeLandlord(),
+          // visible: this.hasToBeLandlord(),
         },
         {
           label: 'Log out',
